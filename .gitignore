@@ -1,3 +1,4 @@
+
 # Compiled class file
 *.class
 
@@ -22,3 +23,45 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Compiled class files
+*.class
+bin/
+target/
+build/
+out/
+
+# Eclipse specific
+.classpath
+.project
+.settings/
+.metadata/
+
+# IntelliJ IDEA specific
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Temporary files
+*~
+*.swp
+*.tmp
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Virtual machine crash logs
+hs_err_pid*

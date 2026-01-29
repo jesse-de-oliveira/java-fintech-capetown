@@ -1,0 +1,57 @@
+///////////////////////////////////////////
+🎯 UPDATED: WEEK 1 - FINTECH FOUNDATIONS
+///////////////////////////////////////////
+
+//////////////////////////////////////////////////
+DAY 1 - Why BigDecimal? & The SA Tax Context (VAT)
+Date: Tuesday, Jan 27, 2026
+//////////////////////////////////////////////////
+
+
+Question: Why can't we use double for currency?
+Answer: double uses binary floating-point math. It cannot represent base-10 decimals (like 0.1) exactly.
+	-Problem: 0.1 + 0.2 = 0.30000000000000004
+	-Risk: In South African banking, rounding errors on millions of transactions lead to massive financial discrepancies and compliance failure with the South African Reserve Bank (SARB).
+
+Technical Goal: ZAR Tax Calculator
+In South Africa, the primary tax for financial calculations is VAT (Value Added Tax).
+	-Current Rate: 15%
+	-Rule: Always use the String constructor for BigDecimal: new BigDecimal("15.00").
+	
+Implementation Logic:
+	1.Capture transaction amount.
+	2.Define transaction type (Standard, Exempt, or Zero-rated).
+	3.Apply 15% VAT for Standard items.
+	4.Output the Net and Gross amounts in ZAR (R).
+	
+What I Learned Today:
+	-double is dangerous for ZAR transactions due to precision loss.
+	-BigDecimal methods: .add(), .subtract(), .multiply(), and .divide(amount, 2, RoundingMode.HALF_UP).
+	-South African VAT is 15%. I updated my code to reflect the local economy instead of Brazilian IOF.
+	
+/////////////////////////////////////////////////////////////
+DAY 2 - Collections: ArrayList & HashMap (Account Management)
+Date: Wednesday, Jan 28, 2026
+/////////////////////////////////////////////////////////////
+
+Question: What is an ArrayList and why use it for transaction history?
+Answer: It is a resizable (dynamic) array. Standard arrays in Java are static; an ArrayList grows as a customer makes more transactions.
+
+Key Methods: .add(), .get(), .size().
+ZAR Syntax Note: Always use .compareTo() for BigDecimal.
+	-balance.compareTo(withdrawal) >= 0 (Can I afford this?)
+	
+The "Bank Dictionary" (HashMap):
+I used a HashMap<String, BigDecimal> to simulate a bank’s ledger.
+	-Key: Account Number (e.g., "786001234")
+	-Value: Balance (e.g., R5500.50)	
+	
+Project Update: PayShap Pre-requisite
+I built a system that:
+	-Stores multiple accounts.
+	-Checks balance using a key (Account Number).
+	-Executes Deposits and Withdrawals safely.
+	-Lists all accounts in the "Bank."
+	
+Summary for LinkedIn/Recruiters:
+"Today I mastered Java Collections within a Fintech context. I implemented a dynamic transaction ledger using ArrayList and a high-performance account look-up system using HashMap. I ensured all financial logic remains precise by wrapping these collections with BigDecimal and handled ZAR comparisons using .compareTo() to avoid the pitfalls of floating-point math."
