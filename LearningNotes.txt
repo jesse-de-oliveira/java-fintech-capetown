@@ -11,7 +11,7 @@ Date: Tuesday, Jan 27, 2026
 Question: Why can't we use double for currency?
 Answer: double uses binary floating-point math. It cannot represent base-10 decimals (like 0.1) exactly.
 	-Problem: 0.1 + 0.2 = 0.30000000000000004
-	-Risk: In South African banking, rounding errors on millions of transactions lead to massive financial discrepancies and compliance failure with the South African Reserve Bank (SARB).
+	-Risk: In South African banking, rounding errors on millions of transactions lead to massive financial discrepancies and compliance failure with the South African Reserve Bank (SARB)
 
 Technical Goal: ZAR Tax Calculator
 In South Africa, the primary tax for financial calculations is VAT (Value Added Tax).
@@ -55,3 +55,94 @@ I built a system that:
 	
 Summary for LinkedIn/Recruiters:
 "Today I mastered Java Collections within a Fintech context. I implemented a dynamic transaction ledger using ArrayList and a high-performance account look-up system using HashMap. I ensured all financial logic remains precise by wrapping these collections with BigDecimal and handled ZAR comparisons using .compareTo() to avoid the pitfalls of floating-point math."
+
+
+/////////////////////////////////////////////////////////////
+DAY 3 - OBJECT-ORIENTED PROGRAMMING (OOP)
+Date: Wednesday, Jan 29/30, 2026
+/////////////////////////////////////////////////////////////
+
+What is it? It is a programming paradigm that organizes code around "objects" which bundle:
+	1.Data (fields/attributes)
+	2.Behaviour (methods) 
+	
+Example from real life:
+	-A "bank account" is an object
+	-It has data: balance, account number, owner name
+	-It has behaviour: deposit(), withdraw(), getBalance()
+	
+The 4 pillars of OOP:
+
+1.ENCAPSULATION (Today's focus)
+  Definition: Hide internal details, expose only what's needed
+  
+  Why it matters:
+  -Protects data from accidental modification
+  -Enforces business rules (e.g. "can't have negative balance")
+  -Changes to internals don't break external code
+  
+  Implementation:
+  -Make fields private
+  -Provide public getters (read access)
+  -Provide limited setters (controlled write access)
+  -Validate inputs in constructors/setters
+  
+  Example:
+  public class BankAccount {
+  	private BigDecimal balance;  // Hidden from outside
+  	
+  	public BigDecimal getBalance() {  // Safe read access
+  	return balance;
+  	}
+  public void deposit(BigDecimal amount) {  // Controlled write
+  	if (amount.compareTo(BigDEcimal.ZERO) <= 0) {
+  	throw new IllegalArgumentException("Amount must be positive");
+  	}
+  	this.balance = this.balance.add(amount);
+  	
+  	//NO setBalance() method - balance only changes via deposit / withdraw
+  	
+  }
+  
+  Interview Answer:
+  "Encapsulation bundles data and methods while hiding internals.
+   In my Transaction class, I made amount and accountNumber private 
+   to prevent external code from creating invalid states like negative amounts. 
+   Public getters allow safe read access."
+  
+2.INHERITANCE (will learn in week 3)
+  Definition: Create new classes based on existing ones
+  Example: SavingsAccount extends BankAccount
+  Benefit: Code reuse
+  
+3.POLYMORPHISM (will learn in week 4)
+  Definition: Same method name, different behaviours
+  Example: withdraw() works differently for different account types
+  
+4.ABSTRACTION (will learn in week 4)
+  Definition: Hide complexity, show only essentials
+  Example: You use withdraw() without knowing TCP/IP protocols
+  
+ Why OOP for Cape Town Fintech:
+ 
+ 1. Industry standard:
+ 	-Every company uses OOP
+ 	-Java is inherently object-oriented
+ 	-Cannot write professional code without OOP
+ 	
+ 2.Interview Questions you WILL get:
+ 	-"Explain Encapsulation" (they always ask this)
+ 	-"Why make fields private?"
+ 	-"Walk me through your transaction class"
+ 	-"How do you prevent invalid states?"
+ 	
+ 3.Real-World Modeling:
+ 	-Transaction = object (amount, type, timestamp)
+ 	-Account = object (balance, transactions, owner)
+ 	-Customer = object (accounts, personal info)
+ 	
+ 4.POPIA Compliance (South African data privacy law):
+ 	-Encapsulation enforces data protection
+ 	-Can't accidentally expose PII (personal identifiable info)
+ 	-Access control via methods
+  
