@@ -146,3 +146,56 @@ The 4 pillars of OOP:
  	-Can't accidentally expose PII (personal identifiable info)
  	-Access control via methods
   
+HOUR 2 & 3 - FLASHCARD FRIDAY:  
+ 
+ Concepts Reviewed:
+✅ BigDecimal (why and how)
+✅ ArrayList vs HashMap (when to use)
+✅ Encapsulation (private fields, public methods)
+✅ Git workflow (add, commit, push)
+✅ SA VAT context (15%, exemptions)
+
+
+/////////////////////////////////////////////////////////////
+DAY 4 - USER INPUT, METHODS, AND ALGORITHMS
+Date: Friday, Jan 31, 2026
+/////////////////////////////////////////////////////////////
+HOUR 1: SCANNER & USER INPUT
+═══════════════════════════════════════════════════════════
+
+What is Scanner?
+Java class that reads input from keyboard (console input)
+
+Import statement:
+import java.util.Scanner;
+
+Creating Scanner object:
+Scanner scanner = new Scanner(System.in);
+                               ↑
+                          Reads from keyboard
+                          
+Basic methods:
+.nextLine()        -->  Reads entire line as String (for text)
+.next()            -->  Reads single word as String  
+.nextInt()         -->  Reads integer (whole number)
+.nextDouble()      -->  Reads decimal number
+.nextBigDecimal()  -->  Reads BigDecimal (for money)
+
+Why Scanner matters:
+ - Makes programs interactive
+ - Essential for testing (manual testing w/ diff inputs)
+ - Real-world apps take user input
+ - Interview coding challenges use Scanner
+ 
+ Common Pattern:
+	1. Print a question
+	2. Read user's answer with Scanner
+	3. Validate the input
+	4. Use the input in your logic 
+═══════════════════════════════════════════════════════════
+
+
+
+
+
+
