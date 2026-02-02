@@ -194,6 +194,140 @@ Why Scanner matters:
 	4. Use the input in your logic 
 ═══════════════════════════════════════════════════════════
 
+HOUR 2: METHODS & FUNCTIONS
+═══════════════════════════════════════════════════════════
+
+What is a method?
+A reusable block of code to do something specific.
+
+Why use methods?
+1. Organize code (easier to read)
+2. Reuse code (don't repeat yourself - DRY principle)
+3. Test code (can test each method separately)
+4. Interview expectation (shows professional thinking)
+
+Real-world analogy:
+Your program = Restaurant
+Methods = Kitchen stations (grill station, salad station, dessert station)
+Each station does ONE job well
+Main method = Head chef coordinating everything
+
+Method Structure:
+returnType methodName(parameters) {
+	// do something 
+	return result;
+}
+
+Examples:
+- calculateVAT(amount) → returns VAT amount
+- validateAge(age) → returns true/false
+- formatCurrency(amount) → returns "R 1,234.56"
+
+Methods Key Learnings:
+
+1. Method structure:
+   returnType methodName(parameters) {
+       // code
+       return result;
+   }
+
+2. Why methods matter:
+   - Organize code
+   - Reuse logic (calculateVAT used many times)
+   - Easier to test
+   - Professional standard
+
+3. Method examples I created:
+   - calculateVAT(amount) → returns VAT
+   - isValidAmount(amount) → returns boolean
+   - formatCurrency(amount) → returns String
+
+4. Interview relevance:
+   - Shows I can organize code
+   - Breaking problems into functions
+   - Writing reusable logic
+   
+═══════════════════════════════════════════════════════════
+HOUR 3: BIG-O NOTATION (Algorithm Efficiency)
+═══════════════════════════════════════════════════════════
+
+What is Big-O?
+A way to describe how fast or slow an algorithm is.
+
+Why it matters:
+- Interviews ALWAYS ask "What's the time complexity?"
+- Difference between working code and FAST code
+- Critical for fintech (millions of transactions)
+
+The 3 you MUST know:
+
+O(1) - CONSTANT TIME
+- Same speed regardless of data size
+- Example: HashMap.get(key) - instant lookup
+- Best possible performance
+
+O(n) - LINEAR TIME
+- Speed grows with data size
+- Example: Loop through ArrayList once
+- Acceptable for most problems
+
+O(n²) - QUADRATIC TIME (BAD!)
+- Speed grows exponentially
+- Example: Nested loops
+- Avoid this if possible
+
+Real-world analogy:
+O(1) = Looking up word in index (page 234)
+O(n) = Reading book page by page to find word
+O(n²) = Comparing every word to every other word
+
+Interview format:
+Interviewer: "What's the time complexity?"
+You: "O(n) because I loop through the array once"
+
+Big-O Key Learnings:
+
+1. Three levels I must know:
+   O(1) - Constant (HashMap lookup)
+   O(n) - Linear (single loop)
+   O(n²) - Quadratic (nested loops)
+
+2. Why this matters in interviews:
+   - "What's the time complexity?" = always asked
+   - Shows I think about performance
+   - Difference between junior and senior
+
+3. Real fintech impact:
+   - O(1): Process 1 million transactions instantly
+   - O(n): Process 1 million transactions in 1 second
+   - O(n²): Process 1 million transactions in... never (crashes)
+
+4. Interview answer template:
+   "This solution is O(n) because I loop through 
+    the array once to find the target."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
