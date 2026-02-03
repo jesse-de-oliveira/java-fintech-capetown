@@ -94,7 +94,7 @@ public class MethodsBasics {
 		// Format with R prefix
 		return "R " + rounded;
 	}
-	
+		
 
 	
 	

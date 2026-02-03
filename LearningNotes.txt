@@ -1,5 +1,5 @@
 ///////////////////////////////////////////
-🎯 UPDATED: WEEK 1 - FINTECH FOUNDATIONS
+🎯 UPDATED: WEEK 0 - FINTECH FOUNDATIONS
 ///////////////////////////////////////////
 
 //////////////////////////////////////////////////
@@ -307,10 +307,72 @@ Big-O Key Learnings:
     the array once to find the target."
 
 
+═══════════════════════════════════════════════════════════
+WEEK 1 - DAY 2 - Tuesday Feb 3, 2026
+═══════════════════════════════════════════════════════════
+TODAY'S GOAL:
+Build Compound Interest Calculator - real financial math
 
+WHY THIS MATTERS:
+- Banks use this exact formula for savings accounts
+- Interviews often include financial calculations
+- Shows I can apply programming to real-world problems
+- South African context (FNB, Capitec savings rates)
 
+TYPING STATUS:
+- Yesterday: 12.9 WPM
+- Still focusing on correct form over speed
 
+FORMULA TO LEARN:
+A = P(1 + r/n)^(nt)
+Where:
+- A = Final amount
+- P = Principal (initial investment)
+- r = Annual interest rate (as decimal)
+- n = Number of times interest compounds per year
+- t = Number of years
 
+Simplified (yearly compounding): A = P(1 + r)^t
+
+COMPOUND INTEREST CALCULATOR - KEY LEARNINGS
+═══════════════════════════════════════════════════════════
+
+1. FINANCIAL MATH MASTERY:
+   Formula: A = P(1 + r)^t
+   - Implemented year-by-year calculation
+   - Showed interest-on-interest growth
+   - Used realistic South African bank rates
+
+2. CODE TECHNIQUES:
+   - Input validation with while loops
+   - Try-catch error handling
+   - BigDecimal for precise calculations
+   - Scanner for user interaction
+   - Professional output formatting
+
+3. REAL-WORLD APPLICATION:
+   Example: R 10,000 at 8% for 5 years
+   - Simple interest would be: R 4,000 (10k × 8% × 5)
+   - Compound interest gives: R 4,693 (R 693 MORE!)
+   - That's 17% more money just from compounding
+
+4. PROFESSIONAL TOUCHES:
+   - Listed real SA bank rates (FNB, Capitec, TymeBank)
+   - Used ZAR currency notation
+   - Showed year-by-year breakdown
+   - Calculated percentage gain
+   - Validated all inputs
+
+5. INTERVIEW RELEVANCE:
+   - Shows I can implement financial algorithms
+   - Demonstrates input validation skills
+   - Clean, professional code structure
+   - Real-world problem solving
+
+6. TYPING PROGRESS:
+   - Started at 6.8 WPM yesterday
+   - Still maintaining correct form
+   - Getting more comfortable with no-looking rule
 
 
 
