@@ -185,7 +185,7 @@ public class CompoundInterestCalculator {
         // ═══════════════════════════════════════════════════════
         System.out.println("╠════════════════════════════════════════════╣");
         System.out.println("║              FINAL SUMMARY                 ║");
-        System.out.println("╠═══════════════════════════════════════5═════╣");
+        System.out.println("╠═══════════════════════════════════════5-100═════╣");
         System.out.println(String.format("  Initial Investment:  R %,.2f", 
                                         principal.doubleValue()));
         System.out.println(String.format("  Interest Rate:       %.2f%% per year", 

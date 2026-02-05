@@ -374,7 +374,60 @@ COMPOUND INTEREST CALCULATOR - KEY LEARNINGS
    - Still maintaining correct form
    - Getting more comfortable with no-looking rule
 
+═══════════════════════════════════════════════════════════
+DAY 3 - LEETCODE TWO SUM
+Wednesday Feb 5, 2026
+═══════════════════════════════════════════════════════════
 
+PROBLEM: Find two numbers in array that sum to target
+
+KEY INSIGHT: complement = target - current
+- Instead of checking all pairs (slow)
+- Ask "have I seen the complement?" (fast)
+
+ALGORITHM:
+1. For each number, calculate complement
+2. Check if complement in HashMap (O(1))
+3. If yes → return indices
+4. If no → store current number
+
+COMPLEXITY:
+- Time: O(n) - single pass
+- Space: O(n) - HashMap storage
+- Beats brute force O(n²) by 1000x
+
+INTERVIEW TALKING POINTS:
+✓ "I'll use a HashMap to track numbers I've seen"
+✓ "For each number, I calculate its complement"
+✓ "HashMap lookup is O(1), so total time is O(n)"
+✓ "This beats the brute force O(n²) approach"
+
+CRITICAL LINE:
+int complement = target - nums[i];
+if (map.containsKey(complement)) {
+    return new int[] {map.get(complement), i};
+}
+
+WHY STORE AFTER CHECKING:
+- Prevents using same element twice
+- Example: nums=[3], target=6
+- If we stored first, would return [0,0] ✗
+- Checking first prevents this ✓
+
+PATTERN RECOGNITION:
+This "complement" pattern appears in:
+- 3Sum, 4Sum
+- Subarray Sum Equals K
+- Two Sum II (sorted array)
+- 50+ other LeetCode problems
+
+HANDWRITING PRACTICE:
+✓ Wrote complete solution by hand
+✓ Traced through 2 examples
+✓ Wrote 5 test cases
+✓ Ready for whiteboard interviews
+
+NEXT: HashMap patterns practice (Day 4)
 
 
 
