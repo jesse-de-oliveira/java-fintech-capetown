@@ -429,6 +429,56 @@ HANDWRITING PRACTICE:
 
 NEXT: HashMap patterns practice (Day 4)
 
+═══════════════════════════════════════════════════════════
+DAY 4 - HASHMAP PATTERNS MASTERY
+Wednesday/Thursday Feb 5/6, 2026
+═══════════════════════════════════════════════════════════
+
+THREE CORE PATTERNS:
+
+1. COUNTING PATTERN
+   Code: freq.put(key, freq.getOrDefault(key, 0) + 1)
+   Use: Character frequency, element counting
+   Problems: Valid Anagram, Group Anagrams, Top K Frequent
+
+2. FIRST UNIQUE PATTERN
+   Approach: Build frequency map → Iterate original order
+   Use: Find first non-repeating element
+   Problems: First Unique Character, Majority Element
+
+3. LOOKUP PATTERN
+   Structure: HashMap<ID, Data>
+   Use: Fast O(1) retrieval
+   Problems: Account systems, caching, databases
+
+INTERVIEW RECOGNITION:
+
+"Count occurrences" → Counting pattern
+"Find first unique" → First unique pattern
+"Fast lookup" → Lookup pattern
+"Two elements sum to X" → Complement pattern (Day 3)
+
+COMPLEXITY ANALYSIS:
+
+All three patterns:
+- Time: O(n) - process each element once
+- Space: O(k) where k = unique elements
+- HashMap operations (put, get, containsKey) = O(1)
+
+HANDWRITING PRACTICE:
+✓ Wrote 3 complete solutions by hand
+✓ Traced each pattern with examples
+✓ Understand when to use each pattern
+✓ Ready for 100+ HashMap problems
+
+PATTERN COMBINATIONS:
+- Two Sum = Complement + Lookup
+- Group Anagrams = Counting + Lookup
+- Top K Frequent = Counting + Sorting
+
+NEXT: Week review + more LeetCode (Day 5)
+
+═══════════════════════════════════════════════════════════
 
 
 
