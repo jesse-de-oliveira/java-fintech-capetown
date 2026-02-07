@@ -1,4 +1,4 @@
-package com.fintech.foundations;
+package com.fintech.foundations.Day4;
 
 import java.util.HashMap;
 import java.math.BigDecimal;

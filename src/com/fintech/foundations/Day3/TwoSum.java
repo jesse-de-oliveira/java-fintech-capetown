@@ -1,4 +1,4 @@
-package com.fintech.foundations;
+package com.fintech.foundations.Day3;
 import java.util.HashMap;
 
 /**
