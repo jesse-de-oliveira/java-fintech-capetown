@@ -1,0 +1,127 @@
+═══════════════════════════════════════════════════════════
+WEEK 2 - DAY 1 - SPRING BOOT HELLO WORLD
+Monday Feb 9, 2026
+═══════════════════════════════════════════════════════════
+
+WHAT IS SPRING BOOT?
+Framework that makes building REST APIs easy
+- Auto-configuration (sensible defaults)
+- Embedded web server (Tomcat)
+- Dependency injection (auto-wiring)
+- Production-ready features
+
+KEY CONCEPTS:
+1. REST API: Client-server communication over HTTP
+2. MVC Pattern: Controller (requests) → Service (logic) → Repository (data)
+3. Annotations: Metadata for Spring (@RestController, @GetMapping)
+4. JSON: Standard data format for APIs
+
+ENDPOINTS BUILT TODAY:
+1. GET /hello → Returns plain text
+2. GET /balance/{accountId} → Returns JSON account data
+
+ANNOTATIONS LEARNED:
+@SpringBootApplication - Main entry point
+@RestController - Handles HTTP requests
+@GetMapping("/path") - Routes GET requests
+@PathVariable - Extracts URL parameter
+
+PROJECT STRUCTURE:
+ExpenseTrackerApplication.java - Main file (don't touch)
+HelloController.java - Our REST endpoints
+pom.xml - Maven dependencies
+
+HOW IT WORKS:
+1. Spring Boot starts embedded Tomcat on port 8080
+2. Incoming request: GET /balance/001
+3. Spring routes to method with @GetMapping("/balance/{accountId}")
+4. Method executes, returns Map
+5. Spring converts Map → JSON automatically
+6. Response sent to client
+
+FINTECH CONTEXT:
+This is how TymeBank/Capitec mobile apps communicate with servers!
+- App sends: GET /balance/ACC123
+- Server responds: {"balance": 5000, "currency": "ZAR"}
+
+WHAT'S DIFFERENT FROM WEEK 1:
+- Week 1: Pure Java, all handwritten
+- Week 2: Framework, must TYPE to run and test
+- Transition: Handwrite logic, type to execute
+
+NEXT: Tuesday - POST requests, accepting JSON input
+
+═══════════════════════════════════════════════════════════
+WEEK 2 - DAY 2 - POST REQUESTS + JSON INPUT
+Tuesday Feb 10, 2026
+═══════════════════════════════════════════════════════════
+
+HTTP METHODS LEARNED:
+GET (Day 1): Retrieve data, safe, idempotent
+POST (Today): Create data, not safe, not idempotent
+PUT (Later): Update existing data
+DELETE (Later): Remove data
+
+KEY ANNOTATIONS TODAY:
+@PostMapping - Maps HTTP POST requests
+@RequestBody - Converts JSON input to Java object
+@RequestMapping("/api/transactions") - Base path for controller
+
+WHAT WE BUILT:
+1. Transaction model class (POJO with getters/setters)
+2. TransactionController with 3 endpoints:
+   - POST /api/transactions → Create transaction
+   - GET /api/transactions → Get all transactions
+   - GET /api/transactions/{id} → Get specific transaction
+
+THE MAGIC: @RequestBody
+Spring automatically converts:
+JSON → Java Object (deserialization)
+Java Object → JSON (serialization)
+
+No manual parsing needed!
+
+TESTING:
+Used Postman to send POST requests with JSON body
+Can't test POST easily in browser (needs request body)
+
+EXAMPLE POST REQUEST:
+URL: http://localhost:8080/api/transactions
+Method: POST
+Headers: Content-Type: application/json
+Body:
+{
+  "fromAccount": "001",
+  "toAccount": "002",
+  "amount": 500.00
+}
+
+Response:
+{
+  "transactionId": "TX0001",
+  "status": "completed",
+  "message": "Transaction created successfully"
+}
+
+DATA FLOW:
+1. Client sends JSON
+2. Spring sees @RequestBody
+3. Spring converts JSON → Transaction object
+4. Method processes, returns Map
+5. Spring converts Map → JSON
+6. Client receives JSON response
+
+FINTECH CONTEXT:
+This is how TymeBank app creates payments:
+- User taps "Send Money"
+- App sends POST with transaction details
+- Server processes, returns confirmation
+- App shows "Payment successful"
+
+CURRENT LIMITATIONS (TO FIX TOMORROW):
+- No validation (accepts negative amounts!)
+- No account balance checking
+- No real database (data lost on restart)
+- No error handling for bad input
+
+NEXT: Wednesday - Validation + better error handling
