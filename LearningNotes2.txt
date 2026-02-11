@@ -125,3 +125,62 @@ CURRENT LIMITATIONS (TO FIX TOMORROW):
 - No error handling for bad input
 
 NEXT: Wednesday - Validation + better error handling
+
+═══════════════════════════════════════════════════════════
+WEEK 2 - DAY 3 - VALIDATION + QUERY PARAMETERS
+Wednesday Feb 11, 2026
+═══════════════════════════════════════════════════════════
+
+TWO LEVELS OF VALIDATION:
+1. Bean Validation (annotations on model)
+   - @NotBlank - field cannot be empty
+   - @NotNull - field cannot be null
+   - @Positive - number must be > 0
+   - @DecimalMax - maximum value
+   - @Size(min, max) - length constraint
+   Triggered by: @Valid on @RequestBody parameter
+
+2. Business Logic Validation (manual in code)
+   - Custom rules: "Cannot transfer to same account"
+   - Domain-specific: "Exceeds daily limit"
+   - Written as if-statements in controller/service
+
+KEY ANNOTATIONS:
+@Valid - trigger bean validation
+@ExceptionHandler - catch validation errors globally
+@RequestParam - extract query parameters from URL
+ResponseEntity - control HTTP status code
+
+HTTP STATUS CODES (Critical):
+200 OK - Success (GET)
+201 Created - New resource created (POST)
+400 Bad Request - Client sent invalid data
+404 Not Found - Resource doesn't exist
+500 Internal Server Error - Server crashed
+
+QUERY PARAMETERS:
+URL: /api/transactions?account=001&status=completed
+Code: @RequestParam(required = false) String account
+Use: Filtering, searching, pagination
+
+DIFFERENCE: @PathVariable vs @RequestParam
+@PathVariable: /transactions/TX0001 (part of path)
+@RequestParam: /transactions?id=TX0001 (after ?)
+Use PathVariable for IDs, RequestParam for filters
+
+ResponseEntity examples:
+ResponseEntity.ok(body)                    → 200
+ResponseEntity.status(CREATED).body(body)  → 201
+ResponseEntity.badRequest().body(body)     → 400
+ResponseEntity.notFound().build()          → 404
+
+FINTECH CONTEXT:
+Validation is critical for:
+- Preventing fraud (negative amounts)
+- SARB compliance (daily limits)
+- POPIA (validating PII format)
+- Audit trail integrity
+
+NEXT: Thursday - Error handling + PUT/DELETE
+
+═══════════════════════════════════════════════════════════
