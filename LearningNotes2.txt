@@ -184,3 +184,71 @@ Validation is critical for:
 NEXT: Thursday - Error handling + PUT/DELETE
 
 ═══════════════════════════════════════════════════════════
+WEEK 2 - DAY 4 - ERROR HANDLING + PUT/DELETE
+Thursday Feb 12, 2026
+═══════════════════════════════════════════════════════════
+
+ERROR HANDLING STRATEGY:
+Never expose stack traces to clients (security risk)
+Return clean, actionable error messages
+Use correct HTTP status codes
+Log errors server-side for debugging
+
+CUSTOM EXCEPTIONS CREATED:
+ResourceNotFoundException → 404
+DuplicateResourceException → 409
+InvalidOperationException → 400
+
+GLOBAL EXCEPTION HANDLER:
+@RestControllerAdvice applies to ALL controllers
+Catches exceptions automatically
+Returns consistent error response format
+
+ERROR RESPONSE STRUCTURE:
+{
+  "timestamp": "2026-02-13T14:30:00",
+  "status": 404,
+  "error": "Resource Not Found",
+  "message": "Transaction not found with id: TX9999"
+}
+
+HTTP METHODS COMPLETE:
+GET    - Retrieve data (200)
+POST   - Create data (201)
+PUT    - Update data (200)
+DELETE - Remove data (204)
+
+PUT vs PATCH:
+PUT: Replace entire resource (or update specific fields)
+PATCH: Partial update (we used PUT for status update)
+PUT is idempotent (same request = same result)
+
+DELETE CONSIDERATIONS:
+204 No Content - success but no response body
+Business rules apply (can't delete completed transactions)
+In production: Soft delete (mark as deleted, don't remove)
+
+STATUS CODE DECISION TREE:
+Success? → 2xx (200, 201, 204)
+Client error? → 4xx (400, 404, 409)
+Server error? → 5xx (500)
+
+400 vs 409 vs 422:
+400: Generic validation error
+409: Duplicate resource / conflict
+422: Unprocessable entity (valid JSON but business rule fails)
+
+FINTECH CONTEXT:
+Mobile apps use status codes to determine user messaging
+409 prevents duplicate charges (idempotency)
+404 vs 500 determines retry logic
+Proper error handling = better UX + fewer support tickets
+
+SECURITY NOTES:
+Never return stack traces in production
+Generic 500 message protects internal architecture
+Log detailed errors server-side only
+
+NEXT: Friday - Complete API + week review
+
+═══════════════════════════════════════════════════════════
