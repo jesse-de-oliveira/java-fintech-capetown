@@ -251,4 +251,99 @@ Log detailed errors server-side only
 
 NEXT: Friday - Complete API + week review
 
+
 ═══════════════════════════════════════════════════════════
+WEEK 2 - DAY 5 - POLISH + COMPLETE API
+Friday/Saturday Feb 13-14, 2026
+═══════════════════════════════════════════════════════════
+
+FINAL FEATURES ADDED:
+
+1. PAGINATION
+   - Query params: page, size
+   - Default: page=0, size=20
+   - Max size: 100 (prevent abuse)
+   - Response includes: currentPage, totalPages, isFirst, isLast
+   - Prevents loading thousands of records
+
+2. SORTING
+   - Query param: sort=field,direction
+   - Fields: timestamp, amount, fromAccount
+   - Directions: asc, desc
+   - Default: timestamp,desc (newest first)
+   - Uses Java Comparator
+
+3. STATISTICS ENDPOINT
+   - GET /api/transactions/stats
+   - Returns: total count, total amount, average, status breakdown
+   - Uses Java Streams (map, reduce, groupingBy)
+
+4. BATCH OPERATIONS
+   - POST /api/transactions/batch
+   - Create multiple transactions at once
+   - Returns success/failure counts
+   - Use case: CSV import, bulk processing
+
+5. SEARCH
+   - GET /api/transactions/search?q=query
+   - Case-insensitive description search
+   - Returns matching transactions
+
+6. DESCRIPTION FIELD
+   - Added to Transaction model
+   - Optional, max 200 characters
+   - Searchable
+
+COMPLETE API ENDPOINTS:
+POST   /api/transactions              - Create single
+POST   /api/transactions/batch        - Create multiple
+GET    /api/transactions              - List (paginated, sorted, filtered)
+GET    /api/transactions/{id}         - Get by ID
+GET    /api/transactions/stats        - Statistics
+GET    /api/transactions/search?q=X   - Search
+PUT    /api/transactions/{id}?status= - Update status
+DELETE /api/transactions/{id}         - Delete
+
+QUERY PARAMETERS SUPPORTED:
+?account=X      - Filter by account
+?status=X       - Filter by status
+?page=N         - Page number (0-indexed)
+?size=N         - Page size (1-100)
+?sort=field,dir - Sort field and direction
+?q=X            - Search query
+
+JAVA STREAMS USED:
+.filter()       - Filtering
+.map()          - Transformation
+.reduce()       - Aggregation
+.collect()      - Collection
+.sorted()       - Sorting
+.groupingBy()   - Grouping
+
+PAGINATION MATH:
+start = page × size
+end = min(start + size, total)
+totalPages = ceil(total / size)
+
+PRODUCTION CONSIDERATIONS:
+- Pagination prevents memory overflow
+- Sorting allows client flexibility
+- Statistics useful for dashboards
+- Batch operations efficient for imports
+- Search enables user-friendly queries
+
+WHAT'S STILL IN-MEMORY:
+All data lost on restart (fixed next week with database)
+
+WEEK 2 COMPLETE:
+✓ REST API fundamentals
+✓ CRUD operations
+✓ Validation
+✓ Error handling
+✓ Pagination
+✓ Sorting
+✓ Statistics
+✓ Batch operations
+✓ Search
+
+NEXT WEEK: PostgreSQL database integration
