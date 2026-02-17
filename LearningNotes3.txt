@@ -1,0 +1,68 @@
+═══════════════════════════════════════════════════════════
+WEEK 3 - DAY 1 - POSTGRESQL SETUP + CONNECTION
+Monday Feb 16, 2026
+═══════════════════════════════════════════════════════════
+
+WHY DATABASES?
+- In-memory storage (Week 2): Data lost on restart.
+- Database storage (Week 3): Data persists forever.
+
+WHAT IS POSTGRESQL?
+- Open-source relational database.
+- ACID transactions (Atomic, Consistent, Isolated, Durable).
+- Critical for financial applications to ensure data integrity.
+
+
+
+INSTALLATION:
+✓ PostgreSQL 16 installed.
+✓ pgAdmin 4 for GUI management.
+✓ Database created: expense_tracker_db.
+✓ User: postgres, Password: postgres123 (dev only).
+
+SPRING BOOT CONNECTION:
+- Added dependencies: postgresql driver & spring-boot-starter-data-jpa.
+- Configuration in application.properties:
+  * URL: jdbc:postgresql://localhost:5432/expense_tracker_db
+  * ddl-auto: update (set to automatically sync schema once entities are defined).
+  * show-sql: true (to monitor Hibernate's upcoming generation).
+
+ORM (Object-Relational Mapping):
+- Hibernate = The engine that maps Java Objects ↔ Database Tables.
+- Current Status: The bridge is built (Connection), but no traffic is flowing (No Entities).
+
+WHAT HAPPENED (TODAY'S PROGRESS):
+1. Successfully installed the PostgreSQL database engine.
+2. Created the physical 'expense_tracker_db' container.
+3. Established a "handshake" between Spring Boot and the Database.
+4. Verified that the app starts without "Connection Refused" errors.
+
+
+
+NOTE ON TABLE GENERATION:
+- The 'transaction' table does NOT exist yet. 
+- Hibernate requires the @Entity annotation to recognize a class as a database table.
+- Currently, the database is empty, awaiting tomorrow's mapping.
+
+ARCHITECTURE EVOLUTION:
+- Week 1: Pure Java (Logic only).
+- Week 2: In-memory (ArrayList).
+- Week 3: Infrastructure Ready (PostgreSQL connected).
+
+ACID PROPERTIES (Fintech Focus):
+- Atomicity: "All or nothing" (e.g., Money leaves A AND arrives at B).
+- Consistency: No illegal data states.
+- Isolation: Transactions don't "bump" into each other.
+- Durability: Once saved, it's permanent.
+
+TESTING COMPLETED:
+✓ PostgreSQL engine is running.
+✓ pgAdmin connects to 'Local PostgreSQL'.
+✓ Spring Boot console shows "Connected to: PostgreSQL 16".
+✓ NO connection timeout/authentication errors.
+
+NEXT STEPS:
+- Day 2: Convert Transaction.java to a JPA Entity (The magic moment).
+- Day 3: Create Repository (The database query tool).
+
+═══════════════════════════════════════════════════════════
