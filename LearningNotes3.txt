@@ -66,3 +66,93 @@ NEXT STEPS:
 - Day 3: Create Repository (The database query tool).
 
 ═══════════════════════════════════════════════════════════
+WEEK 3 - DAY 2 - JPA ENTITIES
+Tuesday Feb 17, 2026
+═══════════════════════════════════════════════════════════
+
+WHAT IS JPA?
+Java Persistence API - standard for Object-Relational Mapping (ORM)
+Maps Java objects ↔ Database tables automatically
+No manual SQL needed for CRUD operations
+
+HIBERNATE:
+JPA implementation (like ArrayList implements List)
+Generates SQL based on entity annotations
+Manages entity lifecycle (transient → persistent → detached)
+
+KEY JPA ANNOTATIONS:
+@Entity - marks class as database table
+@Table(name = "...") - customizes table name
+@Id - marks primary key field (REQUIRED - one per entity)
+@Column(name = "...") - customizes column properties
+@PrePersist - lifecycle callback before insert
+@PostPersist - lifecycle callback after insert
+@PreUpdate - lifecycle callback before update
+@PostUpdate - lifecycle callback after update
+
+@Column ATTRIBUTES:
+name: database column name
+nullable: true/false (NULL/NOT NULL constraint)
+length: for VARCHAR types (e.g., VARCHAR(50))
+precision: total digits for NUMERIC types
+scale: decimal places for NUMERIC types
+unique: true/false (UNIQUE constraint)
+updatable: true/false (can be updated after creation)
+
+ENTITY REQUIREMENTS:
+1. Must have @Entity annotation
+2. Must have @Id field (primary key)
+3. Must have no-arg constructor (can be protected/private)
+4. Class cannot be final
+5. Fields should not be final (JPA needs to modify them)
+
+JAVA → SQL NAMING CONVENTION:
+Java: camelCase (fromAccount, toAccount)
+SQL: snake_case (from_account, to_account)
+Hibernate converts automatically, but @Column(name = "...") is explicit
+
+JAVA TYPE → SQL TYPE MAPPING (PostgreSQL):
+String → VARCHAR
+BigDecimal → NUMERIC
+LocalDateTime → TIMESTAMP
+Integer → INTEGER
+Long → BIGINT
+Boolean → BOOLEAN
+Enum → VARCHAR (by default) or INTEGER
+
+LIFECYCLE CALLBACKS:
+@PrePersist: runs before INSERT
+@PostPersist: runs after INSERT
+@PreUpdate: runs before UPDATE
+@PostUpdate: runs after UPDATE
+@PreRemove: runs before DELETE
+@PostRemove: runs after DELETE
+
+Use case: Set timestamps, generate IDs, validate data, audit logging
+
+WHAT WE DID TODAY:
+1. Added JPA annotations to Transaction class
+2. Defined table name: @Table(name = "transactions")
+3. Marked primary key: @Id on transactionId
+4. Customized columns: @Column with name, nullable, length, precision
+5. Added lifecycle hook: @PrePersist to set defaults
+6. Restarted app → Hibernate recreated table with correct structure
+7. Practiced SQL queries in psql
+
+SQL COMMANDS PRACTICED:
+INSERT INTO transactions (...) VALUES (...);
+SELECT * FROM transactions;
+SELECT * FROM transactions WHERE from_account = '001';
+SELECT COUNT(*), SUM(amount), AVG(amount) FROM transactions;
+SELECT from_account, COUNT(*) FROM transactions GROUP BY from_account;
+UPDATE transactions SET status = 'refunded' WHERE transaction_id = 'TX0001';
+DELETE FROM transactions WHERE transaction_id = 'TX0001';
+
+TABLE STRUCTURE VERIFICATION:
+\d transactions (in psql) - shows columns, types, constraints
+pgAdmin → Tables → transactions → Properties → Columns
+
+TOMORROW: Create Repository interface (JpaRepository)
+No more manual SQL! Repository provides CRUD methods automatically.
+
+═══════════════════════════════════════════════════════════
