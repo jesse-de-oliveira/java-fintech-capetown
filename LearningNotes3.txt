@@ -156,3 +156,127 @@ TOMORROW: Create Repository interface (JpaRepository)
 No more manual SQL! Repository provides CRUD methods automatically.
 
 ═══════════════════════════════════════════════════════════
+WEEK 3 - DAY 3 - REPOSITORY LAYER
+Wednesday Feb 18, 2026
+═══════════════════════════════════════════════════════════
+
+REPOSITORY PATTERN:
+Interface between domain objects and database
+Separates data access logic from business logic
+Allows easy testing (mock repositories)
+
+WHY REPOSITORIES?
+Before: Controller directly accesses database (bad!)
+After: Controller → Repository → Database (clean architecture)
+
+Controller: HTTP handling only
+Repository: Database operations only
+Each layer has ONE responsibility
+
+JPAREPOSITORY:
+Spring Data JPA interface providing CRUD methods
+Extend JpaRepository<Entity, PrimaryKeyType>
+No implementation needed - Spring creates it at runtime!
+
+Built-in methods (FREE, no code):
+- save(entity) - insert or update
+- findById(id) - find by primary key
+- findAll() - get all records
+- deleteById(id) - delete by ID
+- count() - count total records
+- existsById(id) - check if exists
+
+CUSTOM QUERY METHODS:
+Spring generates SQL from method names automatically!
+
+Method naming convention:
+findBy + Field + Operator
+
+Examples:
+findByFromAccount(String account)
+→ WHERE from_account = ?
+
+findByAmountGreaterThan(BigDecimal amount)
+→ WHERE amount > ?
+
+findByFromAccountAndStatus(String account, String status)
+→ WHERE from_account = ? AND status = ?
+
+findByFromAccountOrToAccount(String from, String to)
+→ WHERE from_account = ? OR to_account = ?
+
+Keywords:
+- findBy, getBy, queryBy, readBy
+- And, Or
+- GreaterThan, LessThan, Between
+- Like, Containing, StartingWith, EndingWith
+- OrderBy, OrderByDesc
+- Top, First
+
+OPTIONAL<T>:
+Container that may or may not have a value
+Used when database query might return nothing
+
+Usage:
+Optional<Transaction> result = repository.findById("TX001");
+
+// Get value or throw exception
+Transaction tx = result.orElseThrow(() -> new ResourceNotFoundException(...));
+
+// Get value or return default
+Transaction tx = result.orElse(new Transaction());
+
+// Check if present
+if (result.isPresent()) { ... }
+
+WHY OPTIONAL?
+Prevents NullPointerException
+Forces handling of "not found" case
+Makes code more explicit about missing data
+
+CONTROLLER CHANGES:
+Before: private List<Transaction> transactions = new ArrayList<>();
+After: @Autowired private TransactionRepository transactionRepository;
+
+save() replaces transactions.add()
+findById() replaces stream().filter()
+findAll() replaces transactions
+delete() replaces transactions.remove()
+
+@AUTOWIRED:
+Dependency Injection annotation
+Spring automatically creates TransactionRepository instance
+Injects it into controller when app starts
+
+TESTING COMPLETED:
+✓ Created transaction (saved to database)
+✓ Restarted app (data persisted!)
+✓ Retrieved transactions (read from database)
+✓ Filtered by account (custom query method)
+✓ Filtered by status (custom query method)
+✓ Combined filters (multiple parameters)
+✓ Large transactions query (amount threshold)
+
+SQL GENERATION:
+Hibernate logs SQL in console (show-sql: true)
+Can see exact queries generated from method names
+Example:
+findByFromAccountOrToAccount(account, account)
+→ SELECT * FROM transactions WHERE from_account = ? OR to_account = ?
+
+KEY ACHIEVEMENT:
+DATA NOW PERSISTS ACROSS APPLICATION RESTARTS!
+Before: Stop app → data lost
+Now: Stop app → restart → data still there ✓
+
+ARCHITECTURE LAYERS:
+1. Controller Layer: HTTP handling (@RestController)
+2. Repository Layer: Data access (JpaRepository)
+3. ORM Layer: Object mapping (Hibernate)
+4. Database Layer: Storage (PostgreSQL)
+
+Clean separation of concerns!
+
+TOMORROW: Service layer (business logic between Controller and Repository)
+Move business rules from Controller to Service
+Controller → Service → Repository → Database
