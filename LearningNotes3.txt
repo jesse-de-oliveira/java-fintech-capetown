@@ -280,3 +280,110 @@ Clean separation of concerns!
 TOMORROW: Service layer (business logic between Controller and Repository)
 Move business rules from Controller to Service
 Controller → Service → Repository → Database
+
+═══════════════════════════════════════════════════════════
+WEEK 3 - DAY 4 - SERVICE LAYER + SQL DEEP DIVE
+Thursday Feb 20-23, 2026
+═══════════════════════════════════════════════════════════
+
+SERVICE LAYER PATTERN:
+Business logic layer between Controller and Repository
+Separates concerns: HTTP handling vs business rules vs data access
+
+3-TIER ARCHITECTURE:
+Controller → Service → Repository → Database
+
+Controller: HTTP requests/responses only
+Service: Business logic, validation, orchestration
+Repository: Database queries only
+
+WHY SERVICE LAYER?
+1. Separation of concerns (each layer has ONE job)
+2. Reusability (multiple controllers can use same service)
+3. Testability (test business logic without HTTP)
+4. Transaction management (@Transactional)
+
+@SERVICE ANNOTATION:
+Marks class as service component
+Spring creates singleton instance
+Can be autowired into controllers
+
+@TRANSACTIONAL:
+Ensures database operations are atomic (all-or-nothing)
+If any operation fails, all rollback
+Critical for financial transactions
+
+CONTROLLER CHANGES:
+Before: Controller had business logic + repository calls
+After: Controller delegates to service, only handles HTTP
+
+Example:
+Before: if (tx.getFromAccount().equals(tx.getToAccount())) { throw... }
+After: transactionService.createTransaction(tx); // Service handles validation
+
+REFACTORING COMPLETED:
+Moved business logic from Controller to Service:
+- Account validation (cannot transfer to same account)
+- ID generation (TX0001, TX0002...)
+- Status validation (cannot change refunded transactions)
+- Default value setting (currency, timestamp)
+
+Controller now THIN (only HTTP handling)
+Service now contains ALL business rules
+
+SQL DEEP DIVE (30 MIN PRACTICE):
+
+BASIC QUERIES:
+SELECT * FROM transactions;
+SELECT column1, column2 FROM table;
+WHERE clause filters rows
+ORDER BY sorts results
+
+AGGREGATIONS:
+COUNT(*) - count rows
+SUM(amount) - total
+AVG(amount) - average
+MIN(amount) - smallest
+MAX(amount) - largest
+
+GROUP BY:
+Groups rows by column value
+Must aggregate other columns
+Example: SELECT from_account, COUNT(*) FROM transactions GROUP BY from_account;
+
+HAVING:
+Filters groups (after GROUP BY)
+WHERE filters rows (before GROUP BY)
+Example: HAVING SUM(amount) > 1000
+
+SUBQUERIES:
+Query inside another query
+Can be in WHERE, FROM, or SELECT clause
+Example: WHERE amount > (SELECT AVG(amount) FROM transactions)
+
+INTERVIEW SQL PATTERNS:
+1. Aggregations with GROUP BY
+2. Filtering with HAVING
+3. Subqueries for complex conditions
+4. Second highest/Nth value queries
+5. Combining data with JOINs (advanced, not needed yet)
+
+SQL KEYWORDS PRACTICED:
+SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY
+COUNT, SUM, AVG, MIN, MAX
+AND, OR, IN
+LIMIT, OFFSET
+DISTINCT, UNION
+
+CRITICAL ACHIEVEMENT:
+Clean 3-tier architecture complete!
+Controller → Service → Repository separation working
+All business logic centralized in Service layer
+
+ARCHITECTURE BENEFITS:
+1. Easy to test (mock service in controller tests)
+2. Easy to reuse (multiple controllers use same service)
+3. Easy to maintain (business rules in one place)
+4. Professional pattern (used in all production systems)
+
+TOMORROW: Complete integration, verify persistence, indexing
