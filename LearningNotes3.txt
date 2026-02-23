@@ -387,3 +387,119 @@ ARCHITECTURE BENEFITS:
 4. Professional pattern (used in all production systems)
 
 TOMORROW: Complete integration, verify persistence, indexing
+
+═══════════════════════════════════════════════════════════
+WEEK 3 - DAY 5 - COMPLETE INTEGRATION + INDEXING
+Monday Feb 24, 2026
+═══════════════════════════════════════════════════════════
+
+WEEK 3 SUMMARY:
+Day 1: PostgreSQL setup + connection
+Day 2: JPA entity annotations
+Day 3: Repository layer (JpaRepository)
+Day 4: Service layer (3-tier architecture)
+Day 5: Complete integration + optimization (TODAY)
+
+CRITICAL FIX: ID GENERATION
+Problem: In-memory counter reset on restart (duplicate IDs)
+Solution: Generate ID from database (find max, increment)
+
+Before: private int counter = 1; // Resets every restart
+After: Query database, find highest ID, increment
+
+This ensures:
+- TX0001, TX0002, TX0003 (first run)
+- Stop app, restart
+- TX0004, TX0005... (sequence continues!)
+
+PERSISTENCE VERIFICATION:
+✓ Created transactions
+✓ Stopped application
+✓ Restarted application
+✓ Data still present (not lost!)
+✓ ID sequence continues correctly
+✓ All endpoints work with database
+
+CRITICAL ACHIEVEMENT: DATA PERSISTS FOREVER
+Before Week 3: Data lost on restart (in-memory ArrayList)
+After Week 3: Data survives restarts (PostgreSQL database)
+
+DATABASE INDEXING:
+Index = Data structure speeding up queries
+Like book table of contents (jump to page vs read every page)
+
+Indexes created:
+idx_from_account - speeds up: WHERE from_account = ?
+idx_to_account - speeds up: WHERE to_account = ?
+idx_status - speeds up: WHERE status = ?
+idx_timestamp - speeds up: ORDER BY timestamp
+idx_account_status - composite for: WHERE from_account = ? AND status = ?
+
+WHEN TO INDEX:
+✓ Primary keys (automatic)
+✓ Foreign keys
+✓ Columns in WHERE clauses
+✓ Columns in JOIN conditions
+✓ Columns in ORDER BY
+
+PERFORMANCE IMPACT:
+Sequential Scan: Reads ALL rows (slow for large tables)
+Index Scan: Reads ONLY matching rows (10-100x faster!)
+
+Example:
+1000 rows, query: WHERE from_account = 'ACC050'
+Without index: Read 1000 rows
+With index: Read 10-20 rows
+
+EXPLAIN ANALYZE:
+SQL command showing how query executes
+Shows: Seq Scan (slow) vs Index Scan (fast)
+
+Usage:
+EXPLAIN ANALYZE SELECT * FROM transactions WHERE from_account = '001';
+
+Look for:
+- "Seq Scan" = No index used (slow)
+- "Index Scan" = Index used (fast)
+- "cost" = Relative expense
+- "rows" = Estimated rows
+
+INDEX TRADEOFFS:
+Pros:
+- Faster reads (10-100x)
+- Critical for large tables
+- Production requirement
+
+Cons:
+- Slower writes (must update index)
+- Uses disk space
+- Too many indexes = diminishing returns
+
+Rule: Index columns you QUERY often, not columns you WRITE often
+
+WEEK 3 COMPLETE:
+✓ PostgreSQL installed and configured
+✓ JPA entities with proper annotations
+✓ Repository layer with custom queries
+✓ Service layer with business logic
+✓ 3-tier architecture (Controller → Service → Repository)
+✓ Data persistence across restarts
+✓ Database indexes for performance
+✓ Production-grade architecture
+
+FINAL ARCHITECTURE:
+HTTP Request
+    ↓
+Controller (HTTP handling)
+    ↓
+Service (Business logic)
+    ↓
+Repository (Data access)
+    ↓
+Hibernate (ORM layer)
+    ↓
+PostgreSQL (Database + Indexes)
+
+NEXT WEEK: AWS deployment (EC2, RDS, public URL)
+
+═══════════════════════════════════════════════════════════
