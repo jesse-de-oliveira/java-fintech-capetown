@@ -1,0 +1,181 @@
+═══════════════════════════════════════════════════════════
+WEEK 4 - DAY 1 - AWS ACCOUNT + EC2 SETUP
+Monday March 9, 2026
+═══════════════════════════════════════════════════════════
+
+NOTE: Took recovery week after Week 3 (was ill). Back stronger now.
+Continuing from Week 3 completion: Database integration done, persistence verified.
+
+CLOUD COMPUTING:
+Running applications on remote servers instead of local computer
+Benefits: 24/7 availability, accessible from anywhere, scalable, professional
+
+AWS (AMAZON WEB SERVICES):
+Cloud platform providing virtual servers, databases, storage, etc.
+Free tier: 12 months free for small usage (perfect for portfolio projects)
+
+EC2 (ELASTIC COMPUTE CLOUD):
+Virtual server in the cloud
+Like renting a computer that's always on and accessible from internet
+
+Instance type: t2.micro (Free tier)
+- 1 vCPU
+- 1 GB RAM
+- Enough for Spring Boot application
+
+AWS ACCOUNT CREATED:
+Root user account with email + password
+Payment method added (required but free tier usage = $0 cost)
+Region: Africa (Cape Town) af-south-1 (closest to South Africa)
+
+EC2 INSTANCE LAUNCHED:
+Name: expense-tracker-server
+AMI: Ubuntu Server 24.04 LTS (Linux operating system)
+Instance type: t2.micro (free tier eligible)
+Storage: 8GB SSD
+
+KEY PAIR (SSH ACCESS):
+Created: expense-tracker-key.pem (Mac/Linux) or .ppk (Windows)
+Purpose: Private key to connect to server via SSH
+CRITICAL: Never share, never commit to GitHub, saved securely
+
+SECURITY GROUP:
+Firewall rules controlling access to server
+Rules created:
+- Port 22 (SSH): Remote connection access
+- Port 8080 (Custom TCP): Spring Boot application access
+Source: 0.0.0.0/0 = Anywhere (public access)
+
+PUBLIC IP ADDRESS:
+Server accessible at: X.X.X.X (noted down)
+Public DNS: ec2-X-X-X-X.af-south-1.compute.amazonaws.com
+This is how people will access our application!
+
+SSH (SECURE SHELL):
+Protocol for securely connecting to remote servers
+Command: ssh -i key.pem ubuntu@PUBLIC_IP
+Default user: ubuntu (for Ubuntu AMIs)
+
+JAVA INSTALLATION:
+Installed OpenJDK 17 on EC2 instance
+Commands:
+  sudo apt update (update package list)
+  sudo apt upgrade -y (upgrade packages)
+  sudo apt install openjdk-17-jdk -y (install Java)
+  java -version (verify installation)
+
+Set JAVA_HOME environment variable to /usr/lib/jvm/java-17-openjdk-amd64
+
+SERVER READY:
+✓ EC2 instance running
+✓ Can connect via SSH
+✓ Java 17 installed
+✓ Ready to deploy Spring Boot application
+
+TOMORROW: Transfer JAR file to EC2 and run application
+
+IMPORTANT REMINDERS:
+- EC2 instance running 24/7 = uses free tier hours
+- Stop instance when not using (to save hours)
+- Can keep running within free tier (750 hours/month)
+- Never commit AWS keys to GitHub
+
+CURRENT STATE:
+Local: Spring Boot app + PostgreSQL database (localhost)
+AWS: Empty EC2 server with Java installed
+
+NEXT STEPS:
+Day 2: Package app as JAR, transfer to EC2, run application
+Day 3: Setup RDS PostgreSQL database in cloud
+Day 4: Connect app to RDS, configure public access
+Day 5: Final testing, documentation
+Saturday: Unit testing (+1h extra)
+
+TIMELINE UPDATE:
+Originally Week 4 was Feb 24-Mar 2
+Actual Week 4: Mar 2-8 (after recovery week)
+Still on track for 6-month plan completion
+
+═══════════════════════════════════════════════════════════
+WEEK 4 - DAY 2 - DEPLOY APPLICATION TO EC2
+Tuesday March 10, 2026
+═══════════════════════════════════════════════════════════
+
+JAR PACKAGING:
+JAR = Java Archive = Executable package containing all code + dependencies
+Created with: mvn clean package
+Location: target/expense-tracker-0.0.1-SNAPSHOT.jar
+Size: ~45-50 MB (includes Spring Boot, H2 database, all dependencies)
+
+TEMPORARY H2 DATABASE:
+Switched from PostgreSQL to H2 (in-memory) for Day 2
+Why: Self-contained, no external database needed
+Tomorrow: Switch back to PostgreSQL (RDS in cloud)
+
+application.properties changes:
+- Commented out PostgreSQL configuration
+- Added H2 database configuration
+- H2 URL: jdbc:h2:mem:testdb (in-memory, data lost on restart)
+
+SCP (SECURE COPY):
+Protocol for transferring files to remote servers
+Command: scp -i key.pem local_file ubuntu@EC2_IP:remote_path
+Transferred JAR from laptop to EC2 /home/ubuntu/ directory
+Transfer time: ~20 seconds for 45 MB
+
+RUNNING APPLICATION ON EC2:
+Command: java -jar expense-tracker-0.0.1-SNAPSHOT.jar
+Application starts on port 8080 (embedded Tomcat)
+Startup time: ~8 seconds
+
+PUBLIC ACCESS VERIFIED:
+✓ Accessible from laptop browser: http://PUBLIC_IP:8080/api/transactions
+✓ Created transaction via curl/Postman
+✓ Retrieved transactions successfully
+✓ Tested from mobile phone (works from anywhere!)
+
+BACKGROUND EXECUTION:
+Problem: App stops when terminal closes
+Solution: nohup command
+
+nohup java -jar expense-tracker.jar > app.log 2>&1 &
+- nohup: Process continues after terminal closes
+- > app.log: Redirect output to log file
+- 2>&1: Redirect errors to same file
+- &: Run in background
+
+Process management:
+- Check running: ps aux | grep java
+- View logs: tail -f app.log
+- Stop app: kill PROCESS_ID
+
+CRITICAL ACHIEVEMENT:
+APPLICATION IS LIVE ON THE INTERNET! 🎉
+Anyone in the world can access: http://PUBLIC_IP:8080/api/transactions
+
+Current limitations:
+- Data in H2 (in-memory, lost on restart)
+- App stops if EC2 instance restarts
+- No proper process management (systemd) yet
+
+Tomorrow: RDS PostgreSQL for permanent data storage
+
+ARCHITECTURE STATUS:
+✓ EC2 instance running
+✓ Java 17 installed
+✓ Application JAR deployed
+✓ App running on port 8080
+✓ Publicly accessible
+⏳ Database: H2 temporary (RDS PostgreSQL tomorrow)
+
+TESTING COMPLETED:
+✓ GET /api/transactions (empty list works)
+✓ POST /api/transactions (create works)
+✓ GET /api/transactions (retrieve works)
+✓ Accessible from laptop browser
+✓ Accessible from mobile phone
+✓ Background execution works
+
+TOMORROW: Setup RDS PostgreSQL, connect app to cloud database
+
+═══════════════════════════════════════════════════════════

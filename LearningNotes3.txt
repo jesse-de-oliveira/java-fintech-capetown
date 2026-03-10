@@ -503,3 +503,5 @@ PostgreSQL (Database + Indexes)
 NEXT WEEK: AWS deployment (EC2, RDS, public URL)
 
 ═══════════════════════════════════════════════════════════
+
+C:\Users\Jesse De Oliveira\eclipse-workspace\FinTechFoundations
