@@ -179,3 +179,108 @@ TESTING COMPLETED:
 TOMORROW: Setup RDS PostgreSQL, connect app to cloud database
 
 ═══════════════════════════════════════════════════════════
+WEEK 4 - DAY 3 - RDS POSTGRESQL SETUP
+Wednesday March 11, 2026
+═══════════════════════════════════════════════════════════
+
+RDS (RELATIONAL DATABASE SERVICE):
+AWS managed database service
+Handles: installation, configuration, backups, updates, monitoring
+Benefits: High availability, automatic backups, scalable, secure
+
+RDS INSTANCE CREATED:
+Identifier: expense-tracker-db
+Engine: PostgreSQL 17.3
+Instance class: db.t3.micro (2 vCPUs, 1 GB RAM, free tier)
+Storage: 20 GB General Purpose SSD (gp3)
+Endpoint: expense-tracker-db.xxxxx.af-south-1.rds.amazonaws.com
+Port: 5432
+Database name: expense_tracker_db
+
+CREDENTIALS:
+Username: postgres
+Password: ExpenseTracker2026! (saved securely)
+
+FREE TIER ELIGIBLE:
+✓ db.t3.micro instance
+✓ 20 GB storage
+✓ 750 hours/month (enough for 24/7)
+✓ Automated backups included
+
+SECURITY CONFIGURATION:
+VPC security group: expense-tracker-db-sg
+Inbound rule: PostgreSQL (5432) from expense-tracker-sg (EC2 only)
+Public access: Yes (but restricted to EC2 via security group)
+Why: Allows EC2 to connect while blocking internet access
+
+APPLICATION CONFIGURATION UPDATED:
+Removed H2 (in-memory) configuration
+Added RDS PostgreSQL configuration:
+  URL: jdbc:postgresql://RDS_ENDPOINT:5432/expense_tracker_db
+  Username: postgres
+  Password: ExpenseTracker2026!
+  Driver: org.postgresql.Driver
+  Dialect: PostgreSQLDialect
+
+DEPLOYMENT PROCESS:
+1. Updated application.properties with RDS endpoint
+2. Packaged new JAR: mvn clean package
+3. Transferred to EC2 via SCP
+4. Stopped old application
+5. Started new application with RDS configuration
+
+CONNECTION VERIFIED:
+✓ Application connects to RDS successfully
+✓ Hibernate creates tables in RDS database
+✓ Can create transactions
+✓ Can retrieve transactions
+✓ Data persists across application restarts
+
+CRITICAL TEST - DATA PERSISTENCE:
+Before: H2 in-memory (data lost on restart)
+Test: Created TX0001, restarted app, checked data
+Result: TX0001 still present after restart ✓
+Conclusion: RDS WORKS! Data persists forever!
+
+ARCHITECTURE NOW:
+EC2 Instance (expense-tracker-server):
+├── Ubuntu Linux
+├── Java 21 (JDK)
+└── expense-tracker.jar
+    └── Connects to ↓
+
+RDS Instance (expense-tracker-db):
+├── PostgreSQL 17
+├── Database: expense_tracker_db
+└── Table: transactions
+
+Separation benefits:
+- EC2 can restart without losing data
+- Database always available
+- Can scale EC2 and RDS independently
+- Automatic database backups
+
+AUTOMATIC BACKUPS:
+Enabled: ✓
+Retention: 1 days
+Window: No preference (AWS chooses low-traffic time)
+
+MONITORING:
+Enhanced monitoring: Disabled (save costs)
+Basic CloudWatch metrics: Enabled (free)
+
+COSTS:
+Current: $0.00 (Free tier)
+Free tier expires: 12 months from account creation
+After free tier: ~$15-20/month (can delete to avoid charges)
+
+IMPORTANT NOTES:
+- RDS endpoint saved in application.properties
+- Password saved securely (not in GitHub!)
+- Security group allows only EC2 access
+- Data now persists permanently
+- Automatic backups daily
+
+TOMORROW: Configure public URL, final testing, documentation
+
+═══════════════════════════════════════════════════════════
